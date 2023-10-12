@@ -1,0 +1,21 @@
+
+#from pydantic import BaseModel
+from config.database import Base
+
+
+
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float
+from sqlalchemy.orm import relationship
+
+
+
+
+class Vallet(Base):
+    __tablename__ = "vallets"
+
+    id = Column(Integer, primary_key=True, index=True)
+    
+    currency = Column(String)
+    amount = Column(Boolean)
+
+    items = relationship("Item", back_populates="owner")
