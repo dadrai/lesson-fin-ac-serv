@@ -16,6 +16,6 @@ class Vallet(Base):
     id = Column(Integer, primary_key=True, index=True)
     
     currency = Column(String)
-    amount = Column(Boolean)
+    amount = Column(Float)
 
-    items = relationship("Item", back_populates="owner")
+    # items = relationship("Item", back_populates="owner")
