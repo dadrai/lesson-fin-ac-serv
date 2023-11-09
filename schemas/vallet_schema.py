@@ -5,21 +5,21 @@ from pydantic.generics import GenericModel
 T = TypeVar('T')
 
 
-class ValletSchema(BaseModel):
-    id: Optional[int] = None
-    currency: Optional[str] = None
-    amount: Optional[float] = None
+# class ValletSchema(BaseModel):
+#     id: Optional[int] = None
+#     currency: Optional[str] = None
+#     amount: Optional[float] = None
 
-    # class Config:
-    #     orm_mode = True
+#     # class Config:
+#     #     orm_mode = True
 
 
-class RequestVallet(BaseModel):
-    parameter: ValletSchema = Field(...)
-
+class CreateRequestVallet(BaseModel):
+    currency: Optional[str | None] = None
+    amount: Optional[float | None] = None
 
 class Response(GenericModel, Generic[T]):
-    code: str
-    status: str
-    message: str
-    result: Optional[T]
+    code: int = 200
+    # status: str
+    message: str = 'Success'
+    data: Optional[T]

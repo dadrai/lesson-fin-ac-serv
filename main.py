@@ -1,12 +1,14 @@
 from typing import Union
 
-from fastapi import FastAPI
+from fastapi import FastAPI,Depends
 
 from models.vallet import Vallet
 
-from config.database import engine
+from config.database import engine, get_db
 
-from schemas.vallet_schema import ValletSchema, Response
+from schemas.vallet_schema import CreateRequestVallet,Response
+
+from sqlalchemy.orm import Session
 
 Vallet.metadata.create_all(bind=engine)
 
@@ -23,12 +25,18 @@ def home():
     return vallet
 
 @app.post("/vallets")
-def vallets(vallet: ValletSchema ):
-    return {Vallet}
+async def vallets(vallet: CreateRequestVallet, db:Session = Depends(get_db)):
+    w=Vallet(**vallet.dict())
 
-@app.post("/vallets")
-def read_item( q: Union[str, None] = None):
-    return { "q": q}
+    db.add(w)
+    db.commit()
+    db.refresh(w)
+
+    return Response(
+        code=200,
+        message="Success",
+        data=w
+    )
 # @app.get("/items/{item_id}")
 # def read_item(item_id: int, q: Union[str, None] = None):
 #     return {"item_id": item_id, "q": q}

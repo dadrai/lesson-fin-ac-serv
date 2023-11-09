@@ -14,7 +14,6 @@ class Vallet(Base):
     __tablename__ = "vallets"
 
     id = Column(Integer, primary_key=True, index=True)
-    
     currency = Column(String)
     amount = Column(Float)
 
