@@ -15,8 +15,13 @@ T = TypeVar('T')
 
 
 class CreateRequestVallet(BaseModel):
-    currency: Optional[str | None] = None
+    currency_id: Optional[int | None] = None
     amount: Optional[float | None] = None
+
+class CreateRequestCurrency(BaseModel):
+    id: Optional[int | None] = None
+    name: Optional[str | None] = None
+
 
 class Response(GenericModel, Generic[T]):
     code: int = 200
